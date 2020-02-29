@@ -1,0 +1,6 @@
+---
+script: bash1.sh
+subroutine: main
+begin_patr: "{%"
+end_patr: "%}"
+```
