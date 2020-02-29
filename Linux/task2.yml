@@ -1,0 +1,4 @@
+---
+script: bash2.sh
+config: bash2.config
+```
