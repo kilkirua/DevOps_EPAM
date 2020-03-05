@@ -1,0 +1,14 @@
+---
+- hosts:
+    - node1.example.com
+    - node2.example.com
+  tasks:
+  - name: check if folder is exists
+    stat:
+      path: /tmp/database
+    register: mariadb_folder
+  - name: install mariadb-server
+    package:
+      name: mariadb-server
+      state: latest
+    when: mariadb_folder.stat.exists
