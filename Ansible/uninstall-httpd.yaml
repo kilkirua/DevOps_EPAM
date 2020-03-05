@@ -1,0 +1,24 @@
+---
+- name: "apache"
+  hosts: local
+  become: yes
+  become_method: sudo 
+  become_user: root
+  tasks:
+   - name: stop nttpd
+     service:
+      name: httpd
+      state: stopped
+  - name: delete httpd
+    package:
+      name: httpd
+      state: absent
+  - name: close port
+    firewalld:
+      port: 80/tcp
+      permanent: yes
+      state: disabled
+  - name: delete a file
+    file:
+      path: /var/www/html/index.html
+      state: absent
