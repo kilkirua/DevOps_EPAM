@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function cheak() {
+function main()  {
 if [[ -n $1 ]] ; then
 	echo "Параметр не пустой"
    if [[ -e $1 ]] then
@@ -10,9 +10,7 @@ if [[ -n $1 ]] ; then
         exit 1
    fi
 fi
-}
 
-function main() {
 template = $1
 result = $2
 
