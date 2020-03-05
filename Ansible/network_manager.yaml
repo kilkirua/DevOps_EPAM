@@ -1,0 +1,16 @@
+---
+- name: stop network manager
+  service:
+      name: NetworkManager
+      state: stopped
+      enabled: no
+ - name: edit grub
+   lineinfile:
+      path: /etc/default/grub
+      regexp: 'GRUB_CMDLINE_.*"'
+      line: 'GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"'
+      owner: root
+      group: root
+      mode: '0644'
+- name: grub2-mkconfig
+  command: grub2-mkconfig
