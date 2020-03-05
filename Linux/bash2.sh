@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function cheak() {
+function main() {
 
 if [ -e "$1" ]&&[ -r "$1" ] ; then
   echo "Файл или директория доступны" 
@@ -8,10 +8,7 @@ else
   echo "Ошибка доступа!" 
   exit 1
 fi
- 
-}
 
-function main() {
 
 lock_file=~/bash2.lock
 
