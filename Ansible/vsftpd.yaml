@@ -1,0 +1,17 @@
+---
+- hosts: all
+  vars:
+    local_enable: yes
+    anonymous_enable: yes
+    write_enable: yes
+    anon_upload_enable: yes
+  tasks:
+  - name: install vsftpd
+    yum:
+      name: vsftpd
+      state: latest
+  - name: ftp configuation
+    template:
+      scr: vsftpd_conf.j2
+      dest: /etc/vsftpd/vsftpd.conf
+  
