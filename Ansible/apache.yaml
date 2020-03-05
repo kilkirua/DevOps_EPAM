@@ -1,0 +1,38 @@
+---
+- name: istall httpd
+  package:
+    name: httpd
+    state: latest
+- name: open port
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+- name: start httpd
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+- name: check httpd
+  systemd:
+    state: started
+    name: httpd
+- name: create a directory
+  file:
+    path: /var/www/html/
+    state: directory
+    mode: '0755'
+    owner: 'ansible'
+    group: 'ansible'
+- name: create a new file
+  file:
+    path: /var/www/html/index.html
+    state: touch
+    mode: '0755'
+    owner: 'ansible'
+    group: 'ansible'
+- name: HTML
+  blockinfile:
+    path: /var/www/html/index.html
+    block: |
+      <h1>Welcome to my web server</h1>
