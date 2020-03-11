@@ -1,0 +1,10 @@
+---
+dependencies: []
+
+galaxy_info:
+    author: kilkirua
+    description: Apache for Ubuntu.
+    platforms:
+        - name: Ubuntu
+          versions:
+              - all
