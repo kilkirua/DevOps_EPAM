@@ -1,0 +1,10 @@
+---
+- name: Provision Apache web server
+  hosts: all
+  roles:
+    - { role: kilkirua.Apache, tags: ["apache"] }
+  post_tasks:
+    - name: Test if Apache is installed and running
+      uri:
+        url: "http://localhost"    
+      changed_when: False   
