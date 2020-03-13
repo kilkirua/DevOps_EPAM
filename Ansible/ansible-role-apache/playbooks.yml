@@ -1,10 +1,6 @@
 ---
-- name: Provision Apache web server
-  hosts: all
+- hosts: all
+  vars:
+  - apache_disable_default_vhost: false
   roles:
-    - { role: kilkirua.Apache, tags: ["apache"] }
-  post_tasks:
-    - name: Test if Apache is installed and running
-      uri:
-        url: "http://localhost"    
-      changed_when: False   
+  - ansible-role-apache
