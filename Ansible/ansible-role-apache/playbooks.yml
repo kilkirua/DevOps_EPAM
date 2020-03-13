@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- hosts: lamp
+  remote_user: root
   vars:
   - apache_disable_default_vhost: false
   roles:
