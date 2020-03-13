@@ -1,59 +1,39 @@
 ---
+- name: "apache repository"
+  sudo: yes
+  apt_repository:
+    repo: "ppa:{{ item.repo }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: "{{ item.update_cache | default('yes') }}"
+    validate_certs: "{{ item.validate_certs | default('yes') }}"
+  with_items: apache_ppa_repo
+  when: item.repo is defined
 
-- include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}.yml"
-    - "{{ ansible_os_family }}.yml"
-  tags: httpd
+- name: "apache installed"
+  sudo: yes
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items: apache_packages
+  when: item.name is defined
 
-- name: Ensure Apache is installed
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ httpd_packages }}"
-  tags: httpd
-
-- name: Install main configuration file
-  template:
-    src: httpd.conf.j2
-    dest: "{{ httpd_config }}"
-    owner: root
-    group: root
-    setype: httpd_config_t
-    mode: '0644'
-  notify: restart httpd
-  tags: httpd
-
-- name: Install status configuration file
-  template:
-    src: etc_httpd_conf.d_status.conf.j2
-    dest: "{{ httpd_status_config }}"
-    owner: root
-    group: root
-    setype: httpd_config_t
-    mode: '0644'
-  notify: restart httpd
-  tags: httpd
-  when: httpd_status_enable
-
-- name: Install certificate files
-  include_tasks: certificates.yml
-  tags: httpd
-
-- name: Install mod_ssl configuration file
-  template:
-    src: ssl.conf.j2
-    dest: "{{ httpd_ssl_config }}"
-    owner: root
-    group: root
-    setype: httpd_config_t
-    mode: '0644'
-  notify: restart httpd
-  tags: httpd
-
-- name: Ensure Apache is always running
+- name: "apache enabled"
+  sudo: yes
   service:
-    name: httpd
+    name: "apache2"
     state: started
-    enabled: true
-  tags: httpd
+    enabled: yes
+
+- name: "apache mods"
+  sudo: yes
+  apache2_module:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: apache_mods
+  when: item.name is defined
+  notify: "apache restart"
+
+- include: "config.yml"
+- include: "vhosts.yml"
