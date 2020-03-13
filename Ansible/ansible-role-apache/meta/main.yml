@@ -2,9 +2,7 @@
 dependencies: []
 
 galaxy_info:
-    author: kilkirua
+    author: Karina 
     description: Apache for Ubuntu.
     platforms:
         - name: Ubuntu
-          versions:
-              - all
