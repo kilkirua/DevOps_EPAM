@@ -4,7 +4,7 @@ random_int = randint(1, 100)
 char = int
 while char != random_int:
     try:
-        char = int(input("Enter integer: "))
+        char = int(input("Enter an integer: "))
         if char > random_int:
             print("Too high")
         elif char < random_int:
