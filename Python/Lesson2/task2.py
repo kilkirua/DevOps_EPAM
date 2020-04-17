@@ -11,5 +11,5 @@ try:
         print(s)
     else:
         print("Triangle doesn't exist")
-except:
-    print("Not enough parameters")
+except IndexError:
+    print("Not enough arguments. Enter the three sides of the triangle.")
