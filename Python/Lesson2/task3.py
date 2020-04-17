@@ -11,5 +11,5 @@ while char != random_int:
             print("Too low")
         else:
             print("Yay!")
-    except:
-        print("Wrong data! Please, enter an integer.")
+    except ValueError:
+        print("Wrong value! Please, enter an integer.")
