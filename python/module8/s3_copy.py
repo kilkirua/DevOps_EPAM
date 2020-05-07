@@ -8,9 +8,9 @@ def copy_files(s3_from, s3_to):
     s3 = boto3.resource('s3')
 
     if s3_to not in s3.buckets.all():
-        s3.create_bucket(Bucket=bucket)
-        bucket.wait_until_exists()
-        print(f"Created {bucket.name} bucket")
+        s3.create_bucket(Bucket=s3_to)
+        s3_to.wait_until_exists()
+        print(f"Created {s3_to.name} bucket")
 
     for bucket in s3_from:
         for file in s3.Bucket(bucket.objects.all()):
