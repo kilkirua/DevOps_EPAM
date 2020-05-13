@@ -32,4 +32,4 @@ def change_status(region, current_status, new_status):
 			print(error)
 
 
-change_status("us-east-1c", "running", "terminated")
+#change_status("us-east-1c", "running", "terminated")
