@@ -16,7 +16,7 @@ from python.module7.top250 import parse_top_250
 class TestParseTop250(TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.mock_data = open(os.path.join(SCRIPT_DIR, 'mockImdb.html'), encoding="UTF-8")
+        cls.mock_data = open(os.path.join(SCRIPT_DIR, 'mockImdb1.html'), encoding="UTF-8")
 
     @classmethod
     def tearDownClass(cls):
