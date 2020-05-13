@@ -15,7 +15,7 @@ def copy_files(s3_from, s3_to):
     for bucket in s3_from:
         for file in s3.Bucket(bucket).objects.all():
             file_from = {'Bucket': file.bucket_name,
-                        'Key': file.key,
+                         'Key': file.key,
                          }
             s3.Bucket(s3_to).copy(file_from, file.key)
             print(f"Copied {file.key}")
