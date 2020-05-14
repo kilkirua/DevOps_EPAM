@@ -7,7 +7,6 @@ import boto3
 from botocore.exceptions import ClientError
 import logging
 import argparse
-import sys
 
 
 class TagCounter():
