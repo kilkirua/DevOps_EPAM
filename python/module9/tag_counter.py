@@ -61,12 +61,13 @@ class TagCounter():
         # If S3 object_name was not specified, use file_name
         if object_name is None:
             object_name = file_name
+            print(f"File {file_name} created")
 
         # Upload the file
         s3_client = boto3.client('s3')
         try:
             response = s3_client.upload_file(file_name, bucket, object_name)
-            print(f"{file_name} uploaded successfully in {bucket}")
+            print(f"File {file_name} uploaded successfully in {bucket}")
         except ClientError as e:
             logging.error(e)
             return False
@@ -79,30 +80,29 @@ if __name__ == "__main__":
     parser.add_argument('-w', type=str, help=TagCounter.log.__doc__, nargs='?', const=f'{parser.prog}.log', metavar='FILENAME')
     parser.add_argument('-s3', type=str, nargs='+', help=TagCounter.upload_file.__doc__,
                         metavar=('FILE_TO_UPLOAD BUCKET_TO_UPLOAD', 'S3_OBJECT_NAME'))
-
     args = parser.parse_args()
-
     counter = TagCounter(args.url)
     print(counter.count())
+
     if args.s3 and len(args.s3) < 2:
         print("Not enough parameters to upload in s3 bucket.",
               TagCounter.upload_file.__doc__)
         exit()
 
-    if args.w and args.s3:
-        try:
-            args.s3[2]
-        except IndexError:
-            args.s3.append(args.s3[0])
-        counter.log(args.w)
-        counter.upload_file(args.s3[0], args.s3[1], args.s3[2])
-    elif args.w:
+    if args.w:
         counter.log(args.w)
     elif args.s3:
         try:
             args.s3[2]
         except IndexError:
             args.s3.append(args.s3[0])
+        counter.upload_file(args.s3[0], args.s3[1], args.s3[2])
+    elif args.w and args.s3:
+        try:
+            args.s3[2]
+        except IndexError:
+            args.s3.append(args.s3[0])
+        counter.log(args.w)
         counter.upload_file(args.s3[0], args.s3[1], args.s3[2])
 
 
