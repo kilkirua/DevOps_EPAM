@@ -86,18 +86,17 @@ if __name__ == "__main__":
     counter = TagCounter(args.url)
     print(counter.count())
 
+    if args.s3 and len(args.s3) < 2:
+        print(TagCounter.upload_file.__doc__)
+        exit()
+
     if args.w and args.s3:
-        if args.s3 and len(args.s3) < 2:
-            counter.log(args.w)
-            parser.print_help()
-            exit()
-        else:
-            try:
-                args.s3[2]
-            except IndexError:
-                args.s3.append(args.s3[0])
-            counter.log(args.w)
-            counter.upload_file(args.s3[0], args.s3[1], args.s3[2])
+        try:
+            args.s3[2]
+        except IndexError:
+            args.s3.append(args.s3[0])
+        counter.log(args.w)
+        counter.upload_file(args.s3[0], args.s3[1], args.s3[2])
     elif args.w:
         counter.log(args.w)
     elif args.s3:
@@ -106,12 +105,3 @@ if __name__ == "__main__":
         except IndexError:
             args.s3.append(args.s3[0])
         counter.upload_file(args.s3[0], args.s3[1], args.s3[2])
-
-
-
-
-
-# test = TagCounter("https://google.com/")
-# print(test.count())
-# print(test.log("counter_html.log"))
-# test.upload_file('counter_html.log', "kilkiruato")
