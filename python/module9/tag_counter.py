@@ -107,10 +107,3 @@ if __name__ == "__main__":
         counter.upload_file(args.s3[0], args.s3[1], args.s3[2])
 
 
-
-
-
-# test = TagCounter("https://google.com/")
-# print(test.count())
-# print(test.log("counter_html.log"))
-# test.upload_file('counter_html.log', "kilkiruato")
